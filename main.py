@@ -87,7 +87,7 @@ async def shutdown_server(manual=False):
     print('Shutting down server...')
     
 
-async def start_server(manual=False):
+async def start_server(manual=True):
     headers = {"Authorization": f"{CRAFTY_TOKEN}","Content-Type": "application/json"}
     channel = discord.utils.get(bot.get_all_channels(), name='dev-chat')
     if channel:
