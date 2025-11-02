@@ -42,6 +42,7 @@ async def stop(ctx):
         await ctx.reply("You can’t use this command!")
         return
     await ctx.reply("Stopping Minecraft server")
+    await shutdown_server(manual=True)
 
 @tasks.loop(seconds=1)
 async def check_server():
@@ -66,10 +67,13 @@ async def check_server():
     except Exception as e:
         print(f'Error checking server status: {e}')
 
-async def shutdown_server():
+async def shutdown_server(manual=False):
     channel = discord.utils.get(bot.get_all_channels(), name='dev-chat')
     if channel:
-        await channel.send('Server has been empty for 5 minutes. Initiating shutdown sequence.')
+        if manual:
+            await channel.send('Server stop command received from admin. Stopping Minecraft server...')
+        else:
+            await channel.send('Server has been empty for 5 minutes. Initiating automatic shutdown sequence.')
     print('Shutting down server...')
 
 bot.run(BOT_TOKEN)
