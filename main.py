@@ -84,7 +84,15 @@ async def shutdown_server(manual=False):
         else:
             await channel.send('Server has been empty for 5 minutes. Initiating automatic shutdown sequence.')
     print('Shutting down server...')
-    #pigeon addition - sending the command to crafty
     
+
+async def start_server(manual=False):
+    headers = {"Authorization": f"{CRAFTY_TOKEN}","Content-Type": "application/json"}
+    channel = discord.utils.get(bot.get_all_channels(), name='dev-chat')
+    if channel:
+        if manual:
+            await channel.send('get in losers mc server is starting')
+            await requests.post(f"https://pesu-mc.ddns.net:8443/api/v2/servers/{SERVER_ID}/action/start_server", headers=headers, verify=False)
+
 
 bot.run(BOT_TOKEN)
