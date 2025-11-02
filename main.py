@@ -26,6 +26,14 @@ async def on_ready():
 async def ping(ctx):
     await ctx.send("pong")
 
+@bot.command()
+async def cat(ctx):
+    await ctx.send("meow")
+
+@bot.command()
+async def pikachu(ctx):
+    await ctx.send("pika pika")
+
 @tasks.loop(seconds=1)
 async def check_server():
     global empty_time, trigger_shutdown
