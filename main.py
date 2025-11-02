@@ -6,6 +6,8 @@ from mcstatus import JavaServer
 from dotenv import load_dotenv
 from datetime import datetime
 
+import requests
+
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 SERVER_IP = os.getenv('SERVER_IP')
@@ -71,5 +73,8 @@ async def shutdown_server():
     if channel:
         await channel.send('Server has been empty for 5 minutes. Initiating shutdown sequence.')
     print('Shutting down server...')
+
+    #pigeon addition - sending the command to crafty
+    mc_server = requests.post("https://pesu-mc.ddns.net/api/v2/servers/1/action/stop_server")
 
 bot.run(BOT_TOKEN)
